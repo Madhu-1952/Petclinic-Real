@@ -2,7 +2,7 @@ pipeline{
     agent any
     tools {
         jdk 'jdk17'
-        maven 'maven3'
+        maven 'maven'
     }
     stages{
         stage ('clean Workspace'){
@@ -12,7 +12,7 @@ pipeline{
         }
         stage ('checkout scm') {
             steps {
-                git 'https://github.com/Aj7Ay/jpetstore-6.git'
+                git 'https://github.com/Madhu-1952/Petclinic-Real.git'
             }
         }
         stage ('maven compile') {
