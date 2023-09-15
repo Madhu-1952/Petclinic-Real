@@ -12,7 +12,7 @@ pipeline{
         }
         stage ('checkout scm') {
             steps {
-                git 'https://github.com/Madhu-1952/Petclinic-Real'
+                git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/Madhu-1952/Petclinic-Real.git'
             }
         }
         stage ('maven compile') {
