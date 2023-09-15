@@ -3,7 +3,9 @@ pipeline{
     tools {
         jdk 'jdk17'
         maven 'maven'
-		SCANNER_HOME=tool 'sonar-scanner'
+    }
+    environment {
+        SCANNER_HOME=tool 'sonar-scanner'
     }
     stages{
         stage ('checkout scm') {
@@ -16,12 +18,26 @@ pipeline{
                 sh 'mvn clean compile'
             }
         }
-		stage("Sonarqube Analysis "){
+        stage("Sonarqube Analysis "){
             steps{
-				withSonarQubeEnv('sonar-server'){
-				sh "${SCANNER_HOME}/bin/sonar-scanner"
-				}
-			}
-		}
+                withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petshop \
+                    -Dsonar.java.binaries=. \
+                    -Dsonar.projectKey=Petshop '''
+                }
+            }
+        }
+		stage ('Build and push to docker hub'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-creds', toolName: 'docker') {
+					    sh "docker login -u laddu11 -p madhu@1952"
+                        sh "docker build -t petshop ."
+                        sh "docker tag petshop manju/petshop:latest"
+                        sh "docker push manju/petshop:latest"
+                   }
+                }
+            }
+        }
    }
 }
