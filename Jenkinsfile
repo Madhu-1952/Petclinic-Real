@@ -21,8 +21,8 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'Docker', toolName: 'docker'){   
                        sh "docker build -t petclinic1 ."
-                       sh "docker tag petclinic1 sevenajay/petclinic1:latest "
-                       sh "docker push sevenajay/petclinic1:latest "
+                       sh "docker tag petclinic1 laddu11/petclinic1:latest "
+                       sh "docker push laddu11/petclinic1:latest "
                     }
                 }
             }
