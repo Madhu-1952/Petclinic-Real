@@ -4,6 +4,9 @@ pipeline{
         jdk 'jdk17'
         maven 'maven'
     }
+    environment {
+        SCANNER_HOME=tool 'sonar-scanner'
+    }
     stages{
         stage ('checkout scm') {
             steps {
@@ -16,5 +19,16 @@ pipeline{
 				
 			}
 		}
+		stage("Docker Build & Push"){
+            steps{
+                script{
+                   withDockerRegistry(credentialsId: 'Docker', toolName: 'docker'){   
+                       sh "docker build -t petclinic1 ."
+                       sh "docker tag petclinic1 sevenajay/petclinic1:latest "
+                       sh "docker push sevenajay/petclinic1:latest "
+                    }
+                }
+            }
+        }
    }
 }
