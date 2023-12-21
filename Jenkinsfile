@@ -20,9 +20,9 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'Docker', toolName: 'docker'){   
-                       sh "docker build -t petclinic1 ."
+                       sh "docker build -t laddu11/petclinic1 ."
                        sh "docker tag petclinic1 laddu11/petclinic1:latest "
-                       sh "docker push laddu11/petclinic1:latest "
+                       sh "docker push petclinic1:latest "
                     }
                 }
             }
