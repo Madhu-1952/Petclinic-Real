@@ -4,9 +4,6 @@ pipeline{
         jdk 'jdk17'
         maven 'maven'
     }
-    environment {
-        SCANNER_HOME=tool 'sonar-scanner'
-    }
     stages{
         stage ('checkout scm') {
             steps {
